@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<project name="xp-build-plugin-apidoc" xmlns:sonar="antlib:org.sonar.ant">
+  <target name="compile" depends="plugin:sonar:run-analysis"/>
+  <target name="clean"/>
+  <target name="validate"/>
+  <target name="prepare"/>
+  <target name="test"/>
+  <target name="integration-test"/>
+  <target name="pre-package"/>
+  <target name="package"/>
+  <target name="post-package"/>
+  <target name="verify"/>
+  <target name="install"/>
+  <target name="publish"/>
+  
+  <!-- Declare new sonar task -->
+  <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+    <classpath>
+      <fileset dir="lib">
+        <include name="sonar-ant-task-1.3.jar"/>
+      </fileset>
+    </classpath>
+  </taskdef>
+  
+  <!-- Define the "sonar" target -->
+  <target name="plugin:sonar:run-analysis">
+    <echo>===> Running Sonar analysis on ${ivy.organisation}#${ivy.module}</echo>
+
+    <!-- Check for configuration file -->
+    <fail message="Missing configuration file ${ivy.home}/sonar.properties for Sonar!">
+      <condition>
+        <not><resourceexists><file file="${ivy.home}/sonar.properties"/></resourceexists></not>
+      </condition>
+    </fail>
+
+    <!-- Include Sonar configuration file -->
+    <property file="${ivy.home}/sonar.properties"/>
+
+    <!-- Sonar properties -->
+    <property name="sonar.projectName" value="${ivy.module}~${ivy.organisation}" />
+    <property name="sonar.language" value="php" />
+    <property name="sonar.sources" value="${toString:build.sources}" />
+
+    <property name="sonar.host.url" value="${sonar.host.url}" />
+    <property name="sonar.jdbc.url" value="${sonar.jdbc.url}" />
+    <property name="sonar.jdbc.driverClassName" value="${sonar.jdbc.driverClassName}" />
+    <property name="sonar.jdbc.username" value="${sonar.jdbc.username}" />
+    <property name="sonar.jdbc.password" value="${sonar.jdbc.password}" />
+
+    <sonar:sonar baseDir="${build.target}" key="${ivy.organisation}:${ivy.module}" version="${ivy.revision}" />
+  </target>
+</project>
