@@ -27,14 +27,14 @@
     <echo>===> Running Sonar analysis on ${ivy.organisation}#${ivy.module}</echo>
 
     <!-- Check for configuration file -->
-    <fail message="Missing configuration file ${ivy.home}/sonar.properties for Sonar!">
+    <fail message="Missing configuration file ${xp.build.lib.dir}/../sonar.properties for Sonar!">
       <condition>
-        <not><resourceexists><file file="${ivy.home}/sonar.properties"/></resourceexists></not>
+        <not><resourceexists><file file="${xp.build.lib.dir}/../sonar.properties"/></resourceexists></not>
       </condition>
     </fail>
 
     <!-- Include Sonar configuration file -->
-    <property file="${ivy.home}/sonar.properties"/>
+    <property file="${xp.build.lib.dir}/../sonar.properties"/>
 
     <!-- Sonar properties -->
     <property name="sonar.projectName" value="${ivy.module}~${ivy.organisation}" />
