@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
 <project name="xp-build-plugin-apidoc" xmlns:sonar="antlib:org.sonar.ant">
-  <target name="compile" depends="plugin:sonar:run-analysis"/>
+  <target name="compile"/>
   <target name="clean"/>
   <target name="validate"/>
   <target name="prepare"/>
-  <target name="test"/>
+  <target name="test" depends="plugin:sonar:run-analysis"/>
   <target name="integration-test"/>
   <target name="pre-package"/>
   <target name="package"/>
