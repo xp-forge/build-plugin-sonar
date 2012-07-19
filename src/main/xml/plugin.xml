@@ -4,9 +4,9 @@
   <target name="clean"/>
   <target name="validate"/>
   <target name="prepare"/>
-  <target name="test" depends="plugin:sonar:run-analysis"/>
+  <target name="test"/>
   <target name="integration-test"/>
-  <target name="pre-package"/>
+  <target name="pre-package" depends="plugin:sonar:run-analysis"/>
   <target name="package"/>
   <target name="post-package"/>
   <target name="verify"/>

@@ -18,12 +18,5 @@
   <publications>
     <artifact name="plugin-sonar" type="plugin" ext="zip" conf="compile"/>
   </publications>
-  <dependencies>
-    <dependency
-     org="net.xp_framework"
-     name="core"
-     rev="latest.integration"
-     conf="*->default"
-    />
-  </dependencies>
+  <dependencies/>
 </ivy-module>
