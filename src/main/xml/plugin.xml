@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
-<project name="xp-build-plugin-apidoc" xmlns:sonar="antlib:org.sonar.ant">
+<project name="xp-build-plugin-sonar" xmlns:sonar="antlib:org.sonar.ant">
   <target name="compile"/>
   <target name="clean"/>
   <target name="validate"/>
   <target name="prepare"/>
   <target name="test"/>
   <target name="integration-test"/>
-  <target name="pre-package" depends="plugin:sonar:run-analysis"/>
+  <target name="ci-metrics" depends="plugin:sonar:run-analysis"/>
+  <target name="pre-package"/>
   <target name="package"/>
   <target name="post-package"/>
   <target name="verify"/>
@@ -24,14 +25,20 @@
   
   <!-- Define the "sonar" target -->
   <target name="plugin:sonar:run-analysis">
-    <echo>===> Running Sonar analysis on ${ivy.organisation}#${ivy.module}</echo>
-
     <!-- Check for configuration file -->
-    <fail message="Missing configuration file ${xp.build.lib.dir}/../sonar.properties for Sonar!">
-      <condition>
-        <not><resourceexists><file file="${xp.build.lib.dir}/../sonar.properties"/></resourceexists></not>
-      </condition>
-    </fail>
+    <if>
+      <not><resourceexists><file file="${xp.build.lib.dir}/../sonar.properties"/></resourceexists></not>
+      <then>
+        <echo level="warning">---> Not running Sonar analysis, ${xp.build.lib.dir}/../sonar.properties does not exist.</echo>
+      </then>
+      <else>
+        <antcall target="plugin:sonar:-run-analysis"/>
+      </else>
+    </if>
+  </target>
+
+  <target name="plugin:sonar:-run-analysis">
+    <echo>===> Running Sonar analysis on ${ivy.organisation}#${ivy.module}</echo>
 
     <!-- Include Sonar configuration file -->
     <property file="${xp.build.lib.dir}/../sonar.properties"/>
