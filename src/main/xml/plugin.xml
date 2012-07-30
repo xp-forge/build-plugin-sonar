@@ -32,11 +32,11 @@
         <echo level="warning">---> Not running Sonar analysis, ${xp.build.lib.dir}/../sonar.properties does not exist.</echo>
       </then>
       <else>
-        <antcall target="plugin:sonar:-run-analysis"/>
+        <antcall target="plugin:sonar:-run-analysis" inheritAll="true" inheritRefs="true" />
       </else>
     </if>
   </target>
-
+  
   <target name="plugin:sonar:-run-analysis">
     <echo>===> Running Sonar analysis on ${ivy.organisation}#${ivy.module}</echo>
 
@@ -46,7 +46,7 @@
     <!-- Sonar properties -->
     <property name="sonar.projectName" value="${ivy.module}~${ivy.organisation}" />
     <property name="sonar.language" value="php" />
-    <property name="sonar.sources" value="${toString:build.sources}" />
+    <property name="sonar.sources" value="${build.target.classes} ${build.target.testClasses}" />
 
     <property name="sonar.host.url" value="${sonar.host.url}" />
     <property name="sonar.jdbc.url" value="${sonar.jdbc.url}" />
