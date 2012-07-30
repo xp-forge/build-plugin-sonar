@@ -9,7 +9,7 @@
    organisation="net.xp_framework.build"
    module="plugin-sonar"
    status="release"
-   revision="1.0.3"
+   revision="1.0.4"
   >
   </info>
   <configurations>
